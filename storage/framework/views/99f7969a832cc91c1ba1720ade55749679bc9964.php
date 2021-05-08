@@ -1,0 +1,1 @@
+<span><?php echo e($time); ?></span><?php /**PATH E:\xampp\htdocs\fastgo\resources\views/orders/partials/time.blade.php ENDPATH**/ ?>

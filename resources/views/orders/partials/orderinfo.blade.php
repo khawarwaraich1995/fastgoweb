@@ -3,7 +3,7 @@
     <h6 class="heading-small text-muted mb-4">{{ __('Restaurant information') }}</h6>
      @include('partials.flash')
      <div class="pl-lg-4">
-         <h3>{{ $order->restorant->name }}</h3>
+         <h4>{{ $order->restorant->name }}</h4>
          <h4>{{ $order->restorant->address }}</h4>
          <h4>{{ $order->restorant->phone }}</h4>
          <h4>{{ $order->restorant->user->name.", ".$order->restorant->user->email }}</h4>
@@ -13,7 +13,7 @@
      @if (config('app.isft'))
          <h6 class="heading-small text-muted mb-4">{{ __('Client Information') }}</h6>
          <div class="pl-lg-4">
-             <h3>{{ $order->client->name }}</h3>
+             <h4>{{ $order->client->name }}</h4>
              <h4>{{ $order->client->email }}</h4>
              <h4>{{ $order->address?$order->address->address:"" }}</h4>
  
@@ -40,7 +40,7 @@
              <h6 class="heading-small text-muted mb-4">{{ __('Table Information') }}</h6>
              <div class="pl-lg-4">
                  
-                     <h3>{{ __('Table:')." ".$order->table->name }}</h3>
+                     <h4>{{ __('Table:')." ".$order->table->name }}</h4>
                      @if ($order->table->restoarea)
                          <h4>{{ __('Area:')." ".$order->table->restoarea->name }}</h4>
                      @endif
@@ -128,7 +128,7 @@
      <h4>{{ __("Delivery") }}: @money( $order->delivery_price, $currency,$convert)</h4>
      @endif
      <hr />
-     <h3>{{ __("TOTAL") }}: @money( $order->delivery_price+$order->order_price, $currency,true)</h3>
+     <h4>{{ __("TOTAL") }}: @money( $order->delivery_price+$order->order_price, $currency,true)</h4>
      <hr />
      <h4>{{ __("Payment method") }}: {{ __(strtoupper($order->payment_method)) }}</h4>
      <h4>{{ __("Payment status") }}: {{ __(ucfirst($order->payment_status)) }}</h4>
@@ -138,17 +138,17 @@
      <hr />
      @if(config('app.isft') || config('app.iswp'))
          <h4>{{ __("Delivery method") }}: {{ $order->getExpeditionType() }}</h4>
-         <h3>{{ __("Time slot") }}: @include('orders.partials.time', ['time'=>$order->time_formated])</h3>
+         <h4>{{ __("Time slot") }}: @include('orders.partials.time', ['time'=>$order->time_formated])</h4>
      @else
          <h4>{{ __("Dine method") }}: {{ $order->getExpeditionType() }}</h4>
          @if ($order->delivery_method!=3)
-             <h3>{{ __("Time slot") }}: @include('orders.partials.time', ['time'=>$order->time_formated])</h3>
+             <h4>{{ __("Time slot") }}: @include('orders.partials.time', ['time'=>$order->time_formated])</h4>
          @endif
      @endif
 
      @if(isset($custom_data)&&count($custom_data)>0)
         <hr />
-        <h3>{{ __(config('settings.label_on_custom_fields')) }}</h3>
+        <h4>{{ __(config('settings.label_on_custom_fields')) }}</h4>
         @foreach ($custom_data as $keyCutom => $itemValue)
             <h4>{{ __("custom.".$keyCutom) }}: {{ $itemValue }}</h4>
         @endforeach

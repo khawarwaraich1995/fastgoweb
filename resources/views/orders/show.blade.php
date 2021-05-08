@@ -11,7 +11,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ "#".$order->id." - ".$order->created_at->format(config('settings.datetime_display_format')) }}</h3>
+                                <h4 class="mb-0">{{ "#".$order->id." - ".$order->created_at->format(config('settings.datetime_display_format')) }}</h4>
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('orders.index') }}" class="btn btn-sm btn-primary"><i class="fas fa-chevron-left"></i> {{ __('Back') }}</a>
