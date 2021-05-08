@@ -170,72 +170,81 @@ $expedition = app('request')->input('expedition');
 <br>
 <br>
 <?php endif; ?>
+
 <?php $__currentLoopData = $sections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $section): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-<section class="section" id="main-content">
-    <div class="container mt--100">
-        <h2><?php echo e($section['title']); ?></h2>
-        <?php if(isset($section['super_title'])): ?>
-        <h2 class="super_title"><?php echo e($section['super_title']); ?></h2>
-        <?php endif; ?>
-
-        <br />
-        <div class="row">
-            <!-- Stores -->
-            <?php if(isset($section['restorants'])): ?>
-            <?php $__empty_1 = true; $__currentLoopData = $section['restorants']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $restorant): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-            <?php $link = route('vendor', ['alias' => $restorant->alias]); ?>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                <div class="strip">
-                    <figure>
-                        <a href="<?php echo e($link); ?>"><img src="<?php echo e($restorant->logom); ?>" data-src="<?php echo e(config('global.restorant_details_image')); ?>" class="img-fluid lazy" alt=""></a>
-                    </figure>
-                    <span class="res_title"><b><a href="<?php echo e($link); ?>"><?php echo e($restorant->name); ?></a></b></span><span class="float-right"><i class="fa fa-star" style="color: #dc3545"></i> <strong><?php echo e(number_format($restorant->averageRating, 1, '.', ',')); ?> <span class="small">/ 5 (<?php echo e(count($restorant->ratings)); ?>)</strong></span></span><br />
-                    <span class="res_description"><?php echo e($restorant->description); ?></span><br />
-                    <span class="res_mimimum"><?php echo e(__('Minimum order')); ?>: <?php echo money($restorant->minimum, config('settings.cashier_currency'),config('settings.do_convertion')); ?></span>
+<section class="popular-foods padding-tb" style="background-color: #fafeff;">
+        <div class="container">
+            <div class="section-header">
+            <h2><?php echo e($section['title']); ?></h2>
+            <?php if(isset($section['super_title'])): ?>
+            <h2 class="super_title"><?php echo e($section['super_title']); ?></h2>
+            <?php endif; ?>
+            </div>
+            <div class="section-wrapper">
+                <div class="row">
+                <?php if(isset($section['restorants'])): ?>
+                <?php $__empty_1 = true; $__currentLoopData = $section['restorants']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $restorant): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                <?php $link = route('vendor', ['alias' => $restorant->alias]); ?>
+                    <div class="col-xl-4 col-md-6 col-12">
+                        <div class="p-food-item">
+                            <div class="p-food-inner">
+                                <div class="p-food-thumb">
+                                    <img src="<?php echo e(config('global.restorant_details_image')); ?>" alt="p-food">
+                                    <span><?php echo e(__('Minimum order')); ?>: <?php echo money($restorant->minimum, config('settings.cashier_currency'),config('settings.do_convertion')); ?></span>
+                                </div>
+                                <div class="p-food-content">
+                                    <div class="p-food-author">
+                                        <a href="<?php echo e($link); ?>"><img src="<?php echo e(asset('kato')); ?>/assets/images/chef/author/01.jpg" alt="food-author"></a>
+                                    </div>
+                                    <h6><a href="<?php echo e($link); ?>"><?php echo e($restorant->name); ?></a></h6>
+                                    <div class="p-food-group">
+                                        <span>Description : <?php echo e($restorant->description); ?></span>
+                                    </div>
+                                    <ul class="del-time">
+                                        <li>
+                                            <i class="icofont-cycling-alt"></i>
+                                            <div class="time-tooltip">
+                                                <div class="time-tooltip-holder">
+                                                    <span class="tooltip-label">Delivery time</span>
+                                                    <span class="tooltip-info">Your order will be delivered in 20
+                                                        minutes.</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="icofont-stopwatch"></i>
+                                            <div class="time-tooltip">
+                                                <div class="time-tooltip-holder">
+                                                    <span class="tooltip-label">Pickup time</span>
+                                                    <span class="tooltip-info">You can pickup order in 20
+                                                        minutes.</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="p-food-footer">
+                                        <div class="left">
+                                            <div class="rating">
+                                            <i class="fa fa-star" style="color: #dc3545"></i> <strong><?php echo e(number_format($restorant->averageRating, 1, '.', ',')); ?> <span class="small">/ 5 (<?php echo e(count($restorant->ratings)); ?>)</strong>
+                                            </div>
+                                        </div>
+                                        <div class="right"><i class="icofont-home"></i> <?php echo e($restorant->address); ?></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                <div class="col-md-12">
+                <p class="text-muted mb-0"><?php echo e(__('Hmmm... Nothing found!')); ?></p>
+                </div>
+                <?php endif; ?>
+                <?php endif; ?>
                 </div>
             </div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-            <div class="col-md-12">
-                <p class="text-muted mb-0"><?php echo e(__('Hmmm... Nothing found!')); ?></p>
-            </div>
-
-            <?php endif; ?>
-            <?php endif; ?>
-
-
-            <!-- Cities -->
-            <?php if(isset($section['cities'])): ?>
-            <?php $__empty_1 = true; $__currentLoopData = isset($section['cities'])?$section['cities']:[]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-            <?php $link = route('show.stores', ['city' => $city->alias]); ?>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                <div class="strip strip_city">
-                    <figure>
-
-                        <a href="<?php echo e($link); ?>"><img src="<?php echo e($city->logo); ?>" data-src="<?php echo e(config('global.restorant_details_image')); ?>" class="img-fluid lazy" alt=""></a>
-
-                        <span class="city_title mt--1"><b><a class="text-white" href="<?php echo e($link); ?>"><?php echo e($city->name); ?></a></b></span><br />
-                        <a href="<?php echo e($link); ?>" class="city_letter mt--1 text-red fade-in"><?php echo e($city->alias); ?></a>
-                    </figure>
-
-                </div>
-            </div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-            <div class="col-md-12">
-                <p class="text-muted mb-0"><?php echo e(__('Hmmm... Nothing found!')); ?></p>
-            </div>
-
-            <?php endif; ?>
-            <?php endif; ?>
-
         </div>
-
-
-
-    </div>
-</section>
-<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
+    </section>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 <?php if(empty($locationfilter)): ?>
 <?php if(config('global.playstore') || config('global.appstore')): ?>
 <section class="food-apps">
