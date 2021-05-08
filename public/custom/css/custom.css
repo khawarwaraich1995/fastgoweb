@@ -2970,15 +2970,129 @@ element.style {
     transition: all .3s ease-in-out;
     margin-bottom: 42px;
 }
+.contact-us {
+    padding: 80px 0;
+    background: #fb524f;
+}
+.bg-shape-style {
+    background: url(../images/header/footer/bg-shape.png);
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.contact-us .contact-from {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+.contact-from {
+    background: #fff;
+}
+.contact-us .contact-home-chef .section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.contact-us .contact-from h5 {
+    padding: 20px 25px;
+    color: #fb524f;
+    margin-bottom: 0;
+}
+.contact-us .contact-from form {
+    border-top: 1px solid #e6e6e6;
+}
+.contact-from form {
+    padding: 40px 25px;
+}
+.contact-us .contact-from form input {
+    background: #fff;
+    box-shadow: 0 0 10px rgb(129 72 17 / 10%);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    margin-bottom: 22px;
+}
+.contact-from form input {
+    margin-bottom: 20px;
+    padding: 18px 15px;
+    background: #f6f6f5;
+    width: 100%;
+    outline: none;
+    border: none;
+}
+.contact-us .contact-from form input[type=submit] {
+    max-width: 200px;
+    color: #fff;
+    background: #fb524f;
+    box-shadow: none;
+    margin: 0;
+}
+.contact-us .contact-from form input {
+    background: #fff;
+    box-shadow: 0 0 10px rgb(129 72 17 / 10%);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    margin-bottom: 22px;
+}
+.contact-from form input[type=submit] {
+    margin-top: 20px;
+    font-weight: 700;
+    padding: 17px;
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.contact-us .contact-home-chef .section-header h3, .contact-us .contact-home-chef .section-header p {
+    color: #fff;
+}
+.contact-us .contact-home-chef .section-wrapper .contact-count-item {
+    width: calc(100%/1);
+}
+.contact-us .contact-home-chef .section-wrapper .contact-count-item .contact-count-inner {
+    background: #fff;
+    text-align: center;
+    margin: 5px;
+    padding: 15px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.contact-us .contact-home-chef .section-wrapper .contact-count-item .contact-count-inner .contact-count-thumb {
+    width: 100%;
+    height: 55px;
+    margin-bottom: 15px;
+    display: flex;
+  justify-content: center;
+}
 @media (min-width: 576px)
 {
     .food-category .food-box {
         padding: 60px 40px;
     }
+    .contact-us .contact-home-chef .section-wrapper .contact-count-item .contact-count-inner {
+        margin-bottom: 0;
+    }
+    .contact-us .contact-home-chef .section-wrapper .contact-count-item {
+        width: calc(100%/3);
+    }
+    .section-header h3 {
+        margin-bottom: 15px;
+    }
     .p-food-item .p-food-inner .p-food-content .p-food-footer .left {
         width: 40%;
         border-right: 1px solid #e6e6e6;
     }
+    .section-header {
+        margin-bottom: 50px;
+        margin-top: -10px;
+    }
+    
     .section-header {
         margin-bottom: 50px;
         margin-top: -10px;
@@ -3015,6 +3129,13 @@ element.style {
         max-width: 650px;
         margin: 0 auto;
     }
+    .section-header p {
+        max-width: 650px;
+        margin: 0 auto;
+    }
+    .contact-us .contact-home-chef .section-header {
+        text-align: left;
+    }
     .p-food-item .p-food-inner .p-food-content .p-food-footer .right {
         text-align: right;
     }
@@ -3032,6 +3153,7 @@ element.style {
         width: calc(100%/4);
         margin-bottom: 0;
     }
+    
     .bg-shape-style {
         background-position: center center;
     }
