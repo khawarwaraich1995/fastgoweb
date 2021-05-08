@@ -95,9 +95,9 @@
             <?php endif; ?>
 
             <!-- Divider -->
-            <hr class="my-3">
+            <!-- <hr class="my-3"> -->
             <!-- Heading -->
-            <?php if(auth()->user()->hasRole('admin')): ?>
+            <!-- <?php if(auth()->user()->hasRole('admin')): ?>
             <h6 class="navbar-heading text-muted"><?php echo e(__('Version')); ?> <?php echo e(config('config.version')); ?>   <span id="uptodate" class="badge badge-success" style="display:none;"><?php echo e(__('latest')); ?></span></h6>
                 <h6><?php echo e(\Carbon\Carbon::now()); ?> </h6>
                 
@@ -113,7 +113,7 @@
                     </button>
                 </div> 
                 
-            <?php endif; ?>
+            <?php endif; ?> -->
             
         </div>
     </div>

@@ -109,18 +109,18 @@
             </a>
         </li>
 
-        @if(!config('settings.hideApps'))
+        <!-- @if(!config('settings.hideApps'))
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('apps.index') }}">
                     <i class="ni ni-spaceship text-red"></i> {{ __('Apps') }}
                 </a>
             </li>
-        @endif
+        @endif -->
 
         
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" href="{{ route('settings.cloudupdate') }}">
                 <i class="ni ni-cloud-download-95 text-blue"></i> {{ __('Updates') }}
             </a>
-        </li>
+        </li> -->
 </ul>
