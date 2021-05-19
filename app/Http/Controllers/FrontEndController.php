@@ -44,6 +44,11 @@ class FrontEndController extends Controller
         return $subdomain;
     }
 
+
+    public function taxi(){
+        return view('taxi.taxi');
+    }
+
     /**
      * Returns restaurants based on the q parameter.
      * @param $restaurantIDS - the list of the restaurants to take into account

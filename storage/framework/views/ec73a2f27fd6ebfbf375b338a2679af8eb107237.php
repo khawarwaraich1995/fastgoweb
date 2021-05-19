@@ -23,6 +23,11 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="/rides">
+                <i class="ni ni-basket text-success"></i> <?php echo e(__('Rides')); ?><div class="blob red"></div>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="<?php echo e(route('drivers.index')); ?>">
                 <i class="ni ni-delivery-fast text-pink"></i> <?php echo e(__('Drivers')); ?>
 

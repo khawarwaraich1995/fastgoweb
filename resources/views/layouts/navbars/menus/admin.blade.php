@@ -21,6 +21,11 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="/rides">
+                <i class="ni ni-basket text-success"></i> {{ __('Rides') }}<div class="blob red"></div>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('drivers.index') }}">
                 <i class="ni ni-delivery-fast text-pink"></i> {{ __('Drivers') }}
             </a>

@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'FrontEndController@index')->name('front');
+Route::get('/ride', 'FrontEndController@taxi')->name('ride');
+    //Bookings
+    Route::post('get-online-riders', ['as' => 'get.riders', 'uses' => 'UserController@get_online_riders']);
+    Route::get('rides', ['as' => 'rides', 'uses' => 'BookingController@index']);
+    Route::post('booking/status', ['as' => 'booking.status', 'uses' => 'BookingController@change_status']);
+    Route::post('assign/rider', ['as' => 'assign.rider', 'uses' => 'BookingController@assignRider']);
+    Route::get('order/detail/{id}', ['as' => 'booking.detail', 'uses' => 'BookingController@orderDetail']);
 Route::get('/'.config('settings.url_route').'/{alias}', 'FrontEndController@restorant')->name('vendor');
 Route::get('/city/{city}', 'FrontEndController@showStores')->name('show.stores');
 Route::get('/lang', 'FrontEndController@langswitch')->name('lang.switch');
