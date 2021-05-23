@@ -114,13 +114,13 @@
             </a>
         </li>
 
-        <!-- @if(!config('settings.hideApps'))
+        @if(!config('settings.hideApps'))
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('apps.index') }}">
-                    <i class="ni ni-spaceship text-red"></i> {{ __('Apps') }}
+                <a class="nav-link" href="{{ url('/ride/categories') }}">
+                    <i class="ni ni-spaceship text-red"></i> {{ __('Vehicle Categories') }}
                 </a>
             </li>
-        @endif -->
+        @endif
 
         
         <!-- <li class="nav-item">

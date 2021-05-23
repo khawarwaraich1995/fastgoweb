@@ -15,13 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'FrontEndController@index')->name('front');
 Route::get('/ride', 'FrontEndController@taxi')->name('ride');
-    //Bookings
-    Route::post('get-online-riders', ['as' => 'get.riders', 'uses' => 'UserController@get_online_riders']);
-    Route::get('rides', ['as' => 'rides', 'uses' => 'BookingController@index']);
-    Route::post('booking/status', ['as' => 'booking.status', 'uses' => 'BookingController@change_status']);
-    Route::post('assign/rider', ['as' => 'assign.rider', 'uses' => 'BookingController@assignRider']);
-    Route::get('order/detail/{id}', ['as' => 'booking.detail', 'uses' => 'BookingController@orderDetail']);
-Route::get('/'.config('settings.url_route').'/{alias}', 'FrontEndController@restorant')->name('vendor');
+//Bookings
+Route::post('get-online-riders', ['as' => 'get.riders', 'uses' => 'UserController@get_online_riders']);
+Route::get('rides', ['as' => 'rides', 'uses' => 'BookingController@index']);
+Route::post('booking/status', ['as' => 'booking.status', 'uses' => 'BookingController@change_status']);
+Route::get('success', ['as' => 'success', 'uses' => 'BookingController@payment_success']);
+Route::post('assign/rider', ['as' => 'assign.rider', 'uses' => 'BookingController@assignRider']);
+Route::get('order/detail/{id}', ['as' => 'booking.detail', 'uses' => 'BookingController@orderDetail']);
+Route::get('/' . config('settings.url_route') . '/{alias}', 'FrontEndController@restorant')->name('vendor');
 Route::get('/city/{city}', 'FrontEndController@showStores')->name('show.stores');
 Route::get('/lang', 'FrontEndController@langswitch')->name('lang.switch');
 
@@ -40,8 +41,21 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('user', 'UserController', ['except' => ['show']]);
     Route::post('/user/push', 'UserController@checkPushNotificationId');
+    Route::post('booking/confirm', ['as' => 'booking.confirm', 'uses' => 'BookingController@bookRide']);
+    Route::prefix('ride')->group(function () {
+        //Categories
+        Route::get('categories', ['as' => 'categories', 'uses' => 'CatagoriesController@index']);
+        Route::get('categories/create', ['as' => 'categories.create', 'uses' => 'CatagoriesController@create']);
+        Route::any('categories/add', ['as' => 'categories.add', 'uses' => 'CatagoriesController@store']);
+        Route::any('categories/update/{id}', ['as' => 'categories.update', 'uses' => 'CatagoriesController@store']);
+        Route::get('categories/edit/{id}', ['as' => 'categories.edit', 'uses' => 'CatagoriesController@edit']);
+        Route::post('categories/change_status', ['as' => 'categories.status', 'uses' => 'CatagoriesController@change_status']);
+        Route::get('categories/destroy/{id}', ['as' => 'categories.destroy', 'uses' => 'CategoriesController@destroy']);
+    });
 
     Route::name('admin.')->group(function () {
+
+
         Route::get('syncV1UsersToAuth0', 'SettingsController@syncV1UsersToAuth0')->name('syncV1UsersToAuth0');
         Route::get('dontsyncV1UsersToAuth0', 'SettingsController@dontsyncV1UsersToAuth0')->name('dontsyncV1UsersToAuth0');
         Route::resource('restaurants', 'RestorantController');
@@ -52,7 +66,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('restaurants/loginas/{restaurant}', 'RestorantController@loginas')->name('restaurants.loginas');
 
         Route::get('removedemodata', 'RestorantController@removedemo')->name('restaurants.removedemo');
-        Route::get('sitemap','SettingsController@regenerateSitemap')->name('regenerate.sitemap');
+        Route::get('sitemap', 'SettingsController@regenerateSitemap')->name('regenerate.sitemap');
 
         // Landing page settings 
         Route::get('landing', 'SettingsController@landing')->name('landing');
@@ -120,7 +134,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/import/restaurants', 'RestorantController@import')->name('import.restaurants');
     Route::get('/restaurant/{restaurant}/activate', 'RestorantController@activateRestaurant')->name('restaurant.activate');
     Route::post('/restaurant/workinghours', 'RestorantController@workingHours')->name('restaurant.workinghours');
-    Route::post('/restaurant/address','RestorantController@getCoordinatesForAddress')->name('restaurant.coordinatesForAddress');
+    Route::post('/restaurant/address', 'RestorantController@getCoordinatesForAddress')->name('restaurant.coordinatesForAddress');
 
     Route::prefix('finances')->name('finances.')->group(function () {
         Route::get('admin', 'FinanceController@adminFinances')->name('admin');
@@ -148,11 +162,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('restaurantslocations', 'RestorantController@restaurantslocations');
 
     Route::get('live', 'OrderController@live');
-    Route::get('/updatestatus/{alias}/{order}', ['as' => 'update.status', 'uses'=>'OrderController@updateStatus']);
+    Route::get('/updatestatus/{alias}/{order}', ['as' => 'update.status', 'uses' => 'OrderController@updateStatus']);
 
     Route::resource('settings', 'SettingsController');
-    Route::get('apps','AppsController@index')->name('apps.index');
-    Route::post('apps','AppsController@store')->name('apps.store');
+    Route::get('apps', 'AppsController@index')->name('apps.index');
+    Route::post('apps', 'AppsController@store')->name('apps.store');
     Route::get('cloudupdate', 'SettingsController@cloudupdate')->name('settings.cloudupdate');
     Route::get('systemstatus', 'SettingsController@systemstatus')->name('systemstatus');
     Route::get('translatemenu', 'SettingsController@translateMenu')->name('translatemenu');
@@ -250,7 +264,7 @@ Route::get('/login/google/redirect', 'Auth\LoginController@googleHandleProviderC
 Route::get('/login/facebook', 'Auth\LoginController@facebookRedirectToProvider')->name('facebook.login');
 Route::get('/login/facebook/redirect', 'Auth\LoginController@facebookHandleProviderCallback');
 
-Route::get('/new/'.config('settings.url_route').'/register', 'RestorantController@showRegisterRestaurant')->name('newrestaurant.register');
+Route::get('/new/' . config('settings.url_route') . '/register', 'RestorantController@showRegisterRestaurant')->name('newrestaurant.register');
 Route::post('/new/restaurant/register/store', 'RestorantController@storeRegisterRestaurant')->name('newrestaurant.store');
 
 Route::get('phone/verify', 'PhoneVerificationController@show')->name('phoneverification.notice');
@@ -264,11 +278,11 @@ $availableLanguagesENV = ENV('FRONT_LANGUAGES', 'EN,English,IT,Italian,FR,French
 $exploded = explode(',', $availableLanguagesENV);
 if (count($exploded) > 3 && config('app.isqrsaas')) {
     for ($i = 0; $i < count($exploded); $i += 2) {
-        $mode="qrsaasMode";
-        if(config('settings.is_whatsapp_ordering_mode')){
-            $mode="whatsappMode";
+        $mode = "qrsaasMode";
+        if (config('settings.is_whatsapp_ordering_mode')) {
+            $mode = "whatsappMode";
         }
-        Route::get('/'.strtolower($exploded[$i]), 'FrontEndController@'.$mode)->name('lang.'.strtolower($exploded[$i]));
+        Route::get('/' . strtolower($exploded[$i]), 'FrontEndController@' . $mode)->name('lang.' . strtolower($exploded[$i]));
     }
 }
 

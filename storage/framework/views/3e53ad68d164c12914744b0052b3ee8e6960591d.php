@@ -46,8 +46,9 @@ Coded by www.creative-tim.com
     <link rel="stylesheet" href="<?php echo e(asset('kato')); ?>/assets/css/swiper.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" integrity="sha512-In/+MILhf6UMDJU4ZhDL0R0fEpsp4D3Le23m6+ujDWXwl3whwpucJG1PEmI3B07nyJx+875ccs+yX2CqQJUxUw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="<?php echo e(asset('argonfront')); ?>/js/core/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" integrity="sha512-In/+MILhf6UMDJU4ZhDL0R0fEpsp4D3Le23m6+ujDWXwl3whwpucJG1PEmI3B07nyJx+875ccs+yX2CqQJUxUw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <?php if(config('settings.google_analytics')): ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo config('settings.google_analytics'); ?>"></script>
@@ -109,7 +110,7 @@ Coded by www.creative-tim.com
     </div>
 
     <!--   Core JS Files   -->
-    <script src="<?php echo e(asset('argonfront')); ?>/js/core/jquery.min.js" type="text/javascript"></script>
+
     <script src="<?php echo e(asset('argonfront')); ?>/js/core/popper.min.js" type="text/javascript"></script>
     <script src="<?php echo e(asset('argonfront')); ?>/js/core/bootstrap.min.js" type="text/javascript"></script>
     <script src="<?php echo e(asset('argonfront')); ?>/js/plugins/perfect-scrollbar.jquery.min.js"></script>
@@ -189,6 +190,9 @@ Coded by www.creative-tim.com
         });
     </script>
     <script>
+        $('.dropify').dropify();
+    </script>
+    <script>
         var autocomplete = new google.maps.places.Autocomplete(document.getElementById('location'));
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
             var place = autocomplete.getPlace();
@@ -206,6 +210,7 @@ Coded by www.creative-tim.com
             $('#end').val(end);
         });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
     <script>
         var directionsDisplay;
         var directionsService = new google.maps.DirectionsService();
@@ -225,7 +230,76 @@ Coded by www.creative-tim.com
             map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
         }
 
-        function calcRoute() {
+        function validateForm() {
+            var pickup = $('#location').val();
+            var drop = $('#location2').val();
+
+            if ($('#later').prop("checked") == true) {
+                var datetime = $('#schedule_datetime').val();
+                if (datetime == '') {
+                    $('#schedule_datetime').css({
+                        'border': '1px solid red'
+                    }); //this line is added before focus
+                    return false;
+                }
+            }
+
+            if (pickup == '') {
+                $('#location').css({
+                    'border': '1px solid red'
+                }); //this line is added before focus
+                $('#location').focus();
+                return false;
+            } else if (drop == '') {
+                $('#location2').css({
+                    'border': '1px solid red'
+                });
+                $('#location2').focus();
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function displayCatagories() {
+            var form = validateForm();
+            if (form == true) {
+                $("#cat-cards").show();
+                $('html, body').animate({
+                    scrollTop: $("#cat-cards").offset().top
+                }, 1000);
+            }
+
+        }
+
+        $('.cat-card').click(function(e) {
+            $(this).addClass("actv");
+            var charges = $(this).attr('data-charges');
+            var chargesType = $(this).attr('data-chargetype');
+            calcRoute(charges, chargesType)
+        });
+
+        $('.opt').click(function(e) {
+            var type = $(this).attr('data-type');
+            var booking_arr = localStorage.getItem("booking_arr");
+            booking_arr = JSON.parse(booking_arr);
+            if (type == "cash") {
+                booking_arr[0].payment_method = "cash";
+                $('.ptype').text('COD');
+                $('#cash').addClass("paymentactv");
+                $('#card').removeClass("paymentactv");
+            } else {
+                booking_arr[0].payment_method = "card";
+                $('.ptype').text('Credit/Debit Card');
+                $('#card').addClass("paymentactv");
+                $('#cash').removeClass("paymentactv");
+            }
+            var chargesType = $(this).attr('data-chargetype');
+            calcRoute(charges, chargesType)
+            localStorage.setItem("booking_arr", JSON.stringify(booking_arr));
+        });
+
+        function calcRoute(charges, chargesType) {
             var start = document.getElementById('start').value;
             var end = document.getElementById('end').value;
             var request = {
@@ -238,16 +312,16 @@ Coded by www.creative-tim.com
                     directionsDisplay.setDirections(response);
                 }
             });
-            getDistance()
+            getDistance(charges, chargesType)
             $("#map-container").css("display", "block");
             $('html, body').animate({
-                scrollTop: $("#map-container").offset().top
-            }, 2000);
+                scrollTop: $("#pc-list").offset().top
+            }, 1000);
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
 
-        function getDistance() {
+        function getDistance(charges, chargesType) {
             var origin = document.getElementById('start').value;
             var destination = document.getElementById('end').value;
             var distanceService = new google.maps.DistanceMatrixService();
@@ -264,23 +338,128 @@ Coded by www.creative-tim.com
                     if (status !== google.maps.DistanceMatrixStatus.OK) {
                         console.log('Error:', status);
                     } else {
-                        var perkm = 10;
-                        var price = parseFloat(response.rows[0].elements[0].distance.text) * parseFloat(perkm);
-                        $("#price").text('Total: $'+price).show();
-                        $("#distance").text(response.rows[0].elements[0].distance.text).show();
+                        var distance = parseFloat(response.rows[0].elements[0].distance.text).toFixed(2);
+                        var type = "Kilometers";
+                        if (chargesType == 'distance' || chargesType == 'miles') {
+                            if (chargesType == 'distance') {
+                                var price = distance * parseFloat(charges).toFixed(2);
+                            } else if (chargesType == 'miles') {
+                                distance = distance / 1.60934;
+                                var price = parseFloat(distance * charges).toFixed(2);
+                                type = "Miles";
+                            }
+                        } else {
+                            var price = parseFloat(response.rows[0].elements[0].distance.text) * parseFloat(charges);
+                        }
+                        $("#price").text('Total: $' + price).show();
+                        $(".finalTotal").text(price).show();
+                        $("#distance").text(parseFloat(distance).toFixed(2) + ' ' + type).show();
                         $("#duration").text(response.rows[0].elements[0].duration.text).show();
-
+                        var schedule = 0;
+                        var schedule_datetime = '';
+                        if($('#later').prop("checked") == true){
+                            schedule = 1;
+                            schedule_datetime =  $('#schedule_datetime').val();
+                        }
                         var booking_arr = [{
-                        'customer_id' : <?php Auth::user()->name ?>,
-                        'start' : origin,
-                        'end' : destination,
-                        'order_amount' : parseFloat(price).toFixed(2)
-                    }];
-                    localStorage.setItem("booking_arr", JSON.stringify(booking_arr));
+                            'start': origin,
+                            'end': destination,
+                            'order_amount': parseFloat(price).toFixed(2),
+                            'payment_method': 'cash',
+                            'is_schedule': schedule,
+                            'schedule_datetime': schedule_datetime,
+                        }];
+                        localStorage.setItem("booking_arr", JSON.stringify(booking_arr));
                     }
                 });
         }
+
+        function pay() {
+            var booking_arr = localStorage.getItem("booking_arr");
+            if (booking_arr != null) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo e(url('/booking/confirm')); ?>",
+                    data: {
+                        'booking_arr': booking_arr,
+                        '_token': '<?php echo e(csrf_token()); ?>'
+                    },
+                    cache: false,
+                    success: function(data) {
+                        if(data.status == true)
+                        {
+                            window.location.href = "/success?orderID="+data.id;
+                        }
+                    },
+                    error: function(data) {
+                        window.location.href = "/login";
+                    }
+                });
+
+            }
+        }
+
+        function autoGet(field) {
+            // Check for geolocation browser support and execute success method
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    geoLocationSuccess,
+                    geoLocationError, {
+                        timeout: 10000
+                    }
+                );
+            } else {
+                alert("your browser doesn't support geolocation");
+            }
+
+            function geoLocationSuccess(pos) {
+                // get user lat,long
+                var myLat = pos.coords.latitude,
+                    myLng = pos.coords.longitude,
+                    loadingTimeout;
+                if (field == "location") {
+                    var start = myLat + ',' + myLng;
+                    $('#start').val(start);
+                }
+                if (field == "location2") {
+                    var end = myLat + ',' + myLng;
+                    $('#end').val(end);
+                }
+                var loading = function() {
+                    $('#' + field).text("fetching...");
+                };
+
+                loadingTimeout = setTimeout(loading, 600);
+
+                var request = $.get(
+                        "https://nominatim.openstreetmap.org/reverse?format=json&lat=" +
+                        myLat +
+                        "&lon=" +
+                        myLng
+                    )
+                    .done(function(data) {
+                        if (loadingTimeout) {
+                            clearTimeout(loadingTimeout);
+                            loadingTimeout = null;
+                            $('#' + field).val(data.display_name);
+                        }
+                    })
+                    .fail(function() {
+                        // handle error
+                    });
+            }
+
+            function geoLocationError(error) {
+                var errors = {
+                    1: "Permission denied",
+                    2: "Position unavailable",
+                    3: "Request timeout"
+                };
+                alert("Error: " + errors[error.code]);
+            }
+        }
     </script>
+
 </body>
 
 </html><?php /**PATH E:\xampp\htdocs\fastgo\resources\views/layouts/front.blade.php ENDPATH**/ ?>

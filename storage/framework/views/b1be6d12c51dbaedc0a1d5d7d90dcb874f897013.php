@@ -11,101 +11,103 @@ $expedition = app('request')->input('expedition');
 ?>
 
 <?php if(empty($locationfilter)): ?>
+<style>
+    .df{
+        display: flex;
+    justify-content: center;
+    align-content: center;
+    }
+</style>
 <section class="food-category padding-tb" style="background-image: url(kato/assets/css/bg-image/category-bg.jpg); background-size: cover;">
             <div class="container">
                 <div class="food-box">
                     <div class="section-header">
-                        <h3>Browse Food Category</h3>
-                        <p>Completely network impactful users whereas next-generation applications engage out thinking via
-                            tactical action.</p>
+                        <h3>Browse Category</h3>
                     </div>
                     <div class="section-wrapper">
                         <div class="food-slider">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <div class="food-item">
-                                        <div class="food-thumb">
-                                            <a href="#"><img src="<?php echo e(asset('kato')); ?>/assets/images/food/01.png" alt="food"></a>
+                                        <div class="food-thumb df">
+                                            <a href="#"><img style="height: 45px;width: 56px" src="<?php echo e(asset('kato')); ?>/assets/images/food/01.png" alt="food"></a>
                                         </div>
-                                        <div class="food-content">
+                                        <div class="food-content text-center">
                                             <a href="#">Breakfast</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="food-item">
-                                        <div class="food-thumb">
-                                            <a href="#"><img src="<?php echo e(asset('kato')); ?>/assets/images/food/02.png" alt="food"></a>
+                                        <div class="food-thumb df">
+                                            <a href="#"><img style="height: 45px;width: 56px" src="<?php echo e(asset('kato')); ?>/assets/images/food/02.png" alt="food"></a>
                                         </div>
-                                        <div class="food-content">
+                                        <div class="food-content text-center">
                                             <a href="#">Lunch</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="food-item">
-                                        <div class="food-thumb">
-                                            <a href="#"><img src="<?php echo e(asset('kato')); ?>/assets/images/food/03.png" alt="food"></a>
+                                        <div class="food-thumb df">
+                                            <a href="#"><img style="height: 45px;width: 56px" src="<?php echo e(asset('kato')); ?>/assets/images/food/03.png" alt="food"></a>
                                         </div>
-                                        <div class="food-content">
+                                        <div class="food-content text-center">
                                             <a href="#">Dinner</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="food-item">
-                                        <div class="food-thumb">
-                                            <a href="#"><img src="<?php echo e(asset('kato')); ?>/assets/images/food/04.png" alt="food"></a>
+                                        <div class="food-thumb df">
+                                            <a href="#"><img style="height: 45px;width: 56px" src="<?php echo e(asset('kato')); ?>/assets/images/food/04.png" alt="food"></a>
                                         </div>
-                                        <div class="food-content">
+                                        <div class="food-content text-center">
                                             <a href="#">Drink</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="food-item">
-                                        <div class="food-thumb">
-                                            <a href="#"><img src="<?php echo e(asset('kato')); ?>/assets/images/food/05.png" alt="food"></a>
+                                        <div class="food-thumb df">
+                                            <a href="#"><img style="height: 45px;width: 56px" src="<?php echo e(asset('kato')); ?>/assets/images/food/05.png" alt="food"></a>
                                         </div>
-                                        <div class="food-content">
+                                        <div class="food-content text-center">
                                             <a href="#">Juice</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="food-item">
-                                        <div class="food-thumb">
-                                            <a href="#"><img src="<?php echo e(asset('kato')); ?>/assets/images/food/06.png" alt="food"></a>
+                                        <div class="food-thumb df">
+                                            <a href="#"><img style="height: 45px;width: 56px" src="<?php echo e(asset('kato')); ?>/assets/images/food/06.png" alt="food"></a>
                                         </div>
-                                        <div class="food-content">
+                                        <div class="food-content text-center">
                                             <a href="#">Coffee</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="food-item">
-                                        <div class="food-thumb">
-                                            <a href="#"><img src="<?php echo e(asset('kato')); ?>/assets/images/food/07.png" alt="food"></a>
+                                        <div class="food-thumb df">
+                                            <a href="#"><img style="height: 45px;width: 56px" src="<?php echo e(asset('kato')); ?>/assets/images/food/07.png" alt="food"></a>
                                         </div>
-                                        <div class="food-content">
+                                        <div class="food-content text-center">
                                             <a href="#">Tea</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="food-item">
-                                        <div class="food-thumb">
-                                            <a href="#"><img src="<?php echo e(asset('kato')); ?>/assets/images/food/08.png" alt="food"></a>
+                                        <div class="food-thumb df">
+                                            <a href="#"><img style="height: 45px;width: 56px" src="<?php echo e(asset('kato')); ?>/assets/images/food/08.png" alt="food"></a>
                                         </div>
-                                        <div class="food-content">
+                                        <div class="food-content text-center">
                                             <a href="#">Beef Roast</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="food-slider-next"><i class="icofont-double-left"></i></div>
-                        <div class="food-slider-prev"><i class="icofont-double-right"></i>
                         </div>
                     </div>
                 </div>
@@ -115,8 +117,6 @@ $expedition = app('request')->input('expedition');
         <div class="container">
             <div class="section-header">
                 <h3>How it Works</h3>
-                <p>Completely network impactful users whereas next-generation applications engage out thinking via
-                    tactical action.</p>
             </div>
             <div class="section-wrapper">
                 <div class="service-item">
@@ -148,7 +148,7 @@ $expedition = app('request')->input('expedition');
                             <span>03 step</span>
                         </div>
                         <div class="service-content">
-                            <h6><a href="#">Cash on Delivery</a></h6>
+                            <h6><a href="#">Pay With Crypto/Google Pay</a></h6>
                         </div>
                     </div>
                 </div>
@@ -194,7 +194,7 @@ $expedition = app('request')->input('expedition');
                                 </div>
                                 <div class="p-food-content">
                                     <div class="p-food-author">
-                                        <a href="<?php echo e($link); ?>"><img src="<?php echo e(asset('kato')); ?>/assets/images/chef/author/01.jpg" alt="food-author"></a>
+                                        <a href="<?php echo e($link); ?>"><img style="height: 65px;" src="<?php echo e(config('global.restorant_details_image')); ?>" alt="food-author"></a>
                                     </div>
                                     <h6><a href="<?php echo e($link); ?>"><?php echo e($restorant->name); ?></a></h6>
                                     <div class="p-food-group">

@@ -57,27 +57,32 @@ class BookingController extends Controller
      */
     public function bookRide(Request $request)
     {
-        $order_data = json_decode($request->order_data);
+
+        $order_data = json_decode($request->booking_arr);
         $order_data = $order_data[0];
         if (isset($order_data) && !empty($order_data)) {
-            $data['category_id'] = $order_data->category_id;
-            $data['customer_id'] = $order_data->customer_id;
+            $data['customer_id'] = auth()->user()->id;
             $data['from_location'] = $order_data->start;
             $data['to_location'] = $order_data->end;
             $data['order_total'] = $order_data->order_amount;
-            $data['full_name'] = $request->full_name;
-            $data['email'] = $request->email;
-            $data['phone'] = $request->phone;
-            $data['transaction_no'] = $request->transaction_no;
-            $data['pickup_time'] = $request->pickup_time;
-            $data['note'] = $request->note;
+            $data['full_name'] = auth()->user()->name;
+            $data['email'] = auth()->user()->email;
+            $data['phone'] = auth()->user()->phone;
+            $data['pickup_time'] = $order_data->schedule_datetime;
+            $data['payment_method'] = $order_data->payment_method;
             $data['payment_status'] = 0;
-
             $book = Booking::create($data);
             if (isset($book->id) && $book->id > 0) {
-                $url = BASE_URL.'/stripe-checkout/'.$data['full_name'].'/'.$book->id.'/'. $data['order_total'];
-                return redirect($url);
+                if($order_data->payment_method == 'cash'){
+                    $message = "Your ride is booked successfully you will get confirmation email";
+                    return response()->json(['status' => true, 'message' => $message, 'id' => $book->id], 200);
+                }
+                
             }
+            // if (isset($book->id) && $book->id > 0) {
+            //     $url = BASE_URL.'/stripe-checkout/'.$data['full_name'].'/'.$book->id.'/'. $data['order_total'];
+            //     return redirect($url);
+            // }
         }
     }
 
@@ -165,18 +170,18 @@ class BookingController extends Controller
      */
     public function payment_success(Request $request)
     {
-        $order_id = $request->order_id;
+        $order_id = $request->orderID;
         if (isset($order_id) && $order_id > 0) {
             $order = Booking::find($order_id);
             $order->payment_status = 1;
             $order->save();
-            $customer = User::find($order->customer_id);
-            if(isset($customer->device_token) && !empty($customer->device_token))
-            {
-                $notification_message = "Your Order# ".$order->id." is placed successfully. You will receive confirmation shortly.";
-                $notify = $this->send_notification($customer->device_token, $notification_message);
-            }
-            return view('payment.success', compact('order_id'));
+            $message = "Your Order# ".$order->id." is placed successfully. You will receive confirmation shortly.";
+            // if(isset($customer->device_token) && !empty($customer->device_token))
+            // {
+            //     $notification_message = "Your Order# ".$order->id." is placed successfully. You will receive confirmation shortly.";
+            //     $notify = $this->send_notification($customer->device_token, $notification_message);
+            // }
+            return view('success', compact('order_id', 'message'));
         }
     }
 

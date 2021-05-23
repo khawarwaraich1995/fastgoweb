@@ -12,6 +12,7 @@ use App\Categories;
 use App\Settings;
 use App\Tables;
 use App\User;
+use App\Catagories;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -45,8 +46,10 @@ class FrontEndController extends Controller
     }
 
 
-    public function taxi(){
-        return view('taxi.taxi');
+    public function taxi()
+    {
+        $catagories = Catagories::where('status', 1)->get();
+        return view('taxi.taxi', compact('catagories'));
     }
 
     /**
