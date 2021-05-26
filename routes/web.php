@@ -53,6 +53,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('categories/destroy/{id}', ['as' => 'categories.destroy', 'uses' => 'CategoriesController@destroy']);
     });
 
+    Route::get('categories-main', ['as' => 'categories-main', 'uses' => 'CatagoriesmainController@index']);
+    Route::get('categories-main/create', ['as' => 'categories-main.create', 'uses' => 'CatagoriesmainController@create']);
+    Route::any('categories-main/add', ['as' => 'categories-main.add', 'uses' => 'CatagoriesmainController@store']);
+    Route::any('categories-main/update/{id}', ['as' => 'categories-main.update', 'uses' => 'CatagoriesmainController@store']);
+    Route::get('categories-main/edit/{id}', ['as' => 'categories-main.edit', 'uses' => 'CatagoriesmainController@edit']);
+    Route::post('categories-main/change_status', ['as' => 'categories-main.status', 'uses' => 'CatagoriesmainController@change_status']);
+    Route::get('categories-main/destroy/{id}', ['as' => 'categories-main.destroy', 'uses' => 'CatagoriesmainController@destroy']);
+
     Route::name('admin.')->group(function () {
 
 

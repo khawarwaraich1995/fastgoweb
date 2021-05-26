@@ -40,8 +40,7 @@
                 </div>
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-danger btn_delivery_pickup" id="delivery"><?php echo e(__('Delivery')); ?></button>
-                        <span><?php echo e(__('or')); ?></span>&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-danger btn_delivery_pickup" id="pickup"><?php echo e(__('Pickup')); ?></button>
+                        
                     </div>
                 </form>
                 <?php else: ?>

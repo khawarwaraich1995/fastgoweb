@@ -114,14 +114,16 @@
             </a>
         </li>
 
-        @if(!config('settings.hideApps'))
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('/ride/categories') }}">
                     <i class="ni ni-spaceship text-red"></i> {{ __('Vehicle Categories') }}
                 </a>
             </li>
-        @endif
-
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/categories-main') }}">
+                    <i class="ni ni-spaceship text-blue"></i> {{ __('Main Categories') }}
+                </a>
+            </li>
         
         <!-- <li class="nav-item">
             <a class="nav-link" href="{{ route('settings.cloudupdate') }}">

@@ -129,15 +129,18 @@
             </a>
         </li>
 
-        <?php if(!config('settings.hideApps')): ?>
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo e(url('/ride/categories')); ?>">
                     <i class="ni ni-spaceship text-red"></i> <?php echo e(__('Vehicle Categories')); ?>
 
                 </a>
             </li>
-        <?php endif; ?>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo e(url('/categories-main')); ?>">
+                    <i class="ni ni-spaceship text-blue"></i> <?php echo e(__('Main Categories')); ?>
 
+                </a>
+            </li>
         
         <!-- <li class="nav-item">
             <a class="nav-link" href="<?php echo e(route('settings.cloudupdate')); ?>">

@@ -12,6 +12,7 @@ use App\Categories;
 use App\Settings;
 use App\Tables;
 use App\User;
+use App\Catagoriesmain;
 use App\Catagories;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -129,7 +130,6 @@ class FrontEndController extends Controller
         if (config('settings.single_mode') && config('settings.single_mode_id')) {
             return $this->singleMode();
         }
-
         //2. Subdomain mode
         if ($this->getSubDomain()) {
             return $this->subdomainMode();

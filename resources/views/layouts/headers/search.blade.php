@@ -40,8 +40,7 @@
                 </div>
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-danger btn_delivery_pickup" id="delivery">{{ __('Delivery') }}</button>
-                        <span>{{ __('or') }}</span>&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-danger btn_delivery_pickup" id="pickup">{{ __('Pickup') }}</button>
+                        
                     </div>
                 </form>
                 @else
