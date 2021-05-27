@@ -39,7 +39,7 @@
                     <input type="hidden" value="" name="expedition" id="expedition"/>
                 </div>
                     <div class="col-md-4">
-                        <button type="submit" class="btn btn-danger btn_delivery_pickup" id="delivery"><?php echo e(__('Delivery')); ?></button>
+                        <button type="submit" class="btn btn-danger btn_delivery_pickup" id="delivery"><?php echo e(__('Search')); ?></button>
                         
                     </div>
                 </form>

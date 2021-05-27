@@ -48,7 +48,7 @@ Coded by www.creative-tim.com
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" integrity="sha512-In/+MILhf6UMDJU4ZhDL0R0fEpsp4D3Le23m6+ujDWXwl3whwpucJG1PEmI3B07nyJx+875ccs+yX2CqQJUxUw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{{ asset('argonfront') }}/js/core/jquery.min.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" integrity="sha512-In/+MILhf6UMDJU4ZhDL0R0fEpsp4D3Le23m6+ujDWXwl3whwpucJG1PEmI3B07nyJx+875ccs+yX2CqQJUxUw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     @if (config('settings.google_analytics'))
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo config('settings.google_analytics'); ?>"></script>
@@ -61,6 +61,7 @@ Coded by www.creative-tim.com
         gtag('js', new Date());
 
         gtag('config', '<?php echo config('settings.google_analytics'); ?>');
+        $('.dropify').dropify();
     </script>
     @endif
 
@@ -188,9 +189,6 @@ Coded by www.creative-tim.com
             enableTime: true,
             dateFormat: "Y-m-d H:i",
         });
-    </script>
-    <script>
-        $('.dropify').dropify();
     </script>
     <script>
         var autocomplete = new google.maps.places.Autocomplete(document.getElementById('location'));

@@ -11,7 +11,9 @@
             <li v-for="page in pages" class="nav-item" v-cloak>
                 <a :href="'/pages/' + page.id" class="nav-link">{{ page.title }}</a>
             </li>
-
+            <li class="nav-item">
+              <a  target="_blank" class="button nav-link nav-link-icon" href="<?php echo e(url('/ride')); ?>">Want a Ride?</a>
+            </li>
             <?php if(!config('settings.single_mode')&&config('settings.restaurant_link_register_position')=="footer"): ?>
             <li class="nav-item">
               <a  target="_blank" class="button nav-link nav-link-icon" href="<?php echo e(route('newrestaurant.register')); ?>"><?php echo e(__(config('settings.restaurant_link_register_title'))); ?></a>

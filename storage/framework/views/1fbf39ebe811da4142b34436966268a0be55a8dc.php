@@ -39,9 +39,10 @@
         <?php
             $categories = App\Catagoriesmain::where('status', 1)->get(['id', 'name', 'image']);
             $steps = App\HowItWorks::where('status', 1)->get(['id', 'name', 'image']);
+            $settings = App\SettingsRide::where('id', 1)->first();
             $stepCounter = 0;
         ?>
-        <section class="food-category padding-tb" style="background: #6f44c3; background-size: cover;">
+        <section class="food-category padding-tb" style="background: #29c0d3; background-size: cover;">
             <div class="container">
                 <div class="food-box">
                     <div class="section-header">
@@ -85,19 +86,29 @@
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="display: flex;
                             align-items: center;
                             justify-content: center;">
-<img src="https://www.nicepng.com/png/full/184-1846369_banner-transparent-download-png-images-free-download-taxi.png" alt="">
+                                       <?php
+                                       if(isset($settings) && !empty($settings->rs_image) && File::exists(public_path(ORIGNAL_IMAGE_PATH_CATEGORIES.$settings->rs_image)))
+                                       {
+                                       $path = BASE_URL.ORIGNAL_IMAGE_PATH_CATEGORIES.$settings->rs_image;
+                                       }else
+                                       {
+                                       $path = NO_IMAGE;
+                                       }
+                                       ?>
+<img src="<?php echo e($path); ?>" alt="">
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="display: flex;
                             align-items: center;
                             justify-content: center;">
                         <div class="ride-box text-center">
-                            <h1 style="font-weight: bold;margin-top:50px;"> Want a Ride?</h1>
+                            <h1 style="font-weight: bold;margin-top:50px;"> <?php echo e($settings->rs_title ?? 'Want a Ride?'); ?></h1>
 
                             <p class="ride-text">
-                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
+                                <?php echo e($settings->rs_desc ?? ''); ?>
+
                             </p>
 
-                            <a class="btn btn-primary" style="    margin-bottom: 20px;background: linear-gradient(to right, #222429 12%, #6f44c3 0%);width: 200px;" href="/ride"> Let's Go</a>
+                            <a class="btn btn-primary" style="    margin-bottom: 20px;background: linear-gradient(to right, #222429 12%, #29c0d3 0%);width: 200px;" href="/ride"> Let's Go</a>
                         </div>
                     </div>
                 </div>

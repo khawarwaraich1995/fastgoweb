@@ -32,6 +32,15 @@ class RideSettingsController extends Controller
             $data['enable_stripe'] = isset($request->enable_stripe) ? 1 : 0;
             $data['cod'] = isset($request->cod) ? 1 : 0;
             $settings = SettingsRide::updateOrCreate(['id' => $id], $data);
+            if ($_FILES['rs_image']['size'] > 0) {
+                $file = $request->file('rs_image');
+                if (isset($settings->rs_image) && !empty($settings->rs_image)) {
+                    delete_images_by_name(ORIGNAL_IMAGE_PATH_CATEGORIES, LARGE_IMAGE_PATH_CATEGORIES, MEDIUM_IMAGE_PATH_CATEGORIES, SMALL_IMAGE_PATH_CATEGORIES, $settings->rs_image);
+                    upload_images(ORIGNAL_IMAGE_PATH_CATEGORIES, LARGE_IMAGE_PATH_CATEGORIES, MEDIUM_IMAGE_PATH_CATEGORIES, SMALL_IMAGE_PATH_CATEGORIES, $file, $settings->id, 'rs_image','settings_rides');
+                } else {
+                    upload_images(ORIGNAL_IMAGE_PATH_CATEGORIES, LARGE_IMAGE_PATH_CATEGORIES, MEDIUM_IMAGE_PATH_CATEGORIES, SMALL_IMAGE_PATH_CATEGORIES, $file, $settings->id, 'rs_image','settings_rides');
+                }
+            }
             if($settings->id > 0)
             {
                 return redirect()->back()->with('success', 'Settings Updated successfully!');

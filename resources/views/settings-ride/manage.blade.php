@@ -27,9 +27,8 @@
                                 </div>
                             </div>
                         @endif
-                        <form id="settings" method="post"
-                            action="{{ url('ridesettings/update/'.($settings->id ?? '')) }}" autocomplete="off"
-                            enctype="multipart/form-data">
+                        <form id="settings" method="post" action="{{ url('ridesettings/update/' . ($settings->id ?? '')) }}"
+                            autocomplete="off" enctype="multipart/form-data">
                             @csrf
                             <div class="nav-wrapper">
                                 <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text"
@@ -39,6 +38,11 @@
                                             data-toggle="tab" href="#tabs-icons-text-1" role="tab"
                                             aria-controls="tabs-icons-text-1" aria-selected="true"><i
                                                 class="ni ni-bullet-list-67 mr-2"></i>Site Settings</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab"
+                                            href="#rsection" role="tab" aria-controls="tabs-icons-text-2"
+                                            aria-selected="false"><i class="ni ni-money-coins"></i> Ride Section Content</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab"
@@ -53,12 +57,11 @@
                                     aria-labelledby="tabs-icons-text-1-tab">
                                     <div class="custom-control custom-checkbox">
                                         @php
-                                        if(isset($settings->cod) && $settings->cod == 1)
-                                        {
-                                            $checked = "checked";
-                                        }else{
-                                            $checked = "";
-                                        }
+                                            if (isset($settings->cod) && $settings->cod == 1) {
+                                                $checked = 'checked';
+                                            } else {
+                                                $checked = '';
+                                            }
                                         @endphp
                                         <input value="1" {{ $checked }} type="checkbox" class="custom-control-input"
                                             name="cod" id="cod">
@@ -67,15 +70,14 @@
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox">
                                             @php
-                                            if(isset($settings->enable_stripe) && $settings->enable_stripe == 1)
-                                            {
-                                                $checked = "checked";
-                                            }else{
-                                                $checked = "";
-                                            }
+                                                if (isset($settings->enable_stripe) && $settings->enable_stripe == 1) {
+                                                    $checked = 'checked';
+                                                } else {
+                                                    $checked = '';
+                                                }
                                             @endphp
-                                            <input value="1" {{ $checked }} type="checkbox" class="custom-control-input"
-                                                name="enable_stripe" id="enable_stripe">
+                                            <input value="1" {{ $checked }} type="checkbox"
+                                                class="custom-control-input" name="enable_stripe" id="enable_stripe">
                                             <label class="custom-control-label" for="enable_stripe">Enable stripe for
                                                 payments when ordering</label>
                                         </div>
@@ -94,12 +96,19 @@
                                         <label class="form-control-label">Default payment type</label><br>
                                         <select class="form-control form-control-alternative" name="default_payment_type">
                                             <option value="stripe"
-                                                {{ isset($settings->default_payment_type) && $settings->default_payment_type == 'stripe' ? 'selected' : '' }}>Stripe
+                                                {{ isset($settings->default_payment_type) && $settings->default_payment_type == 'stripe' ? 'selected' : '' }}>
+                                                Stripe
                                                 Card Processing</option>
                                             <option value="cod"
-                                                {{  isset($settings->default_payment_type) && $settings->default_payment_type == 'cod' ? 'selected' : '' }}>COD
+                                                {{ isset($settings->default_payment_type) && $settings->default_payment_type == 'cod' ? 'selected' : '' }}>
+                                                COD
                                             </option>
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="currency">Currency</label>
+                                        <input step=".01" type="text" name="currency" id="currency"
+                                            class="form-control form-control" value="{{ $settings->currency ?? '' }}">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-control-label" for="driver_percent">Driver percentage from
@@ -122,6 +131,56 @@
                                             value="{{ $settings->appstore ?? '' }}">
                                     </div>
                                 </div>
+                                <div class="tab-pane fade" id="rsection" role="tabpanel" aria-labelledby="rsection">
+                                    <div>
+                                        <h4 class="display-4 mb-0">Ride Section</h4>
+                                        <hr>
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="rs_title">Title</label>
+                                            <input step=".01" type="text" name="rs_title" id="rs_title"
+                                                class="form-control form-control"
+                                                value="{{ $settings->rs_title ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="rs_desc">Description</label>
+                                            <textarea class="form-control" name="rs_desc"
+                                                id="rs_desc">{{ $settings->rs_desc ?? '' }}</textarea>
+                                        </div>
+                                        <div class="form-group text-center">
+                                            <label class="form-control-label" for="input-name">Image
+                                                Image</label>
+                                            <div class="text-center">
+                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                    <div class="fileinput-preview img-thumbnail" data-trigger="fileinput"
+                                                        style="width: 200px;">
+                                                        @php
+                                                        if(isset($settings) && !empty($settings->rs_image) && File::exists(public_path(ORIGNAL_IMAGE_PATH_CATEGORIES.$settings->rs_image)))
+                                                        {
+                                                        $path = BASE_URL.ORIGNAL_IMAGE_PATH_CATEGORIES.$settings->rs_image;
+                                                        }else
+                                                        {
+                                                        $path = NO_IMAGE;
+                                                        }
+                                                        @endphp
+                                                        <img src="{{$path}}" alt="...">
+                                                    </div>
+                                                    <div>
+                                                        <span class="btn btn-outline-secondary btn-file">
+                                                            <span class="fileinput-new">Select image</span>
+                                                            <span class="fileinput-exists">Change</span>
+
+
+                                                            <input type="file" name="rs_image"
+                                                                accept="image/x-png,image/gif,image/jpeg">
+                                                        </span>
+                                                        <a href="#" class="btn btn-outline-secondary fileinput-exists"
+                                                            data-dismiss="fileinput">Remove</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="payments">
                                     <div>
                                         <h4 class="display-4 mb-0">Stripe</h4>
@@ -129,13 +188,21 @@
                                         <div class="form-group">
                                             <label class="form-control-label" for="stripe_key">Stripe API key</label>
                                             <input step=".01" type="text" name="stripe_key" id="stripe_key"
-                                                class="form-control form-control" value="{{ $settings->stripe_key ?? '' }}">
+                                                class="form-control form-control"
+                                                value="{{ $settings->stripe_key ?? '' }}">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-control-label" for="secret_key">Stripe API
                                                 Secret</label>
                                             <input step=".01" type="text" name="secret_key" id="secret_key"
-                                                class="form-control form-control" value="{{ $settings->secret_key ?? '' }}">
+                                                class="form-control form-control"
+                                                value="{{ $settings->secret_key ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="stripe_currecny">Stripe Currency</label>
+                                            <input step=".01" type="text" name="stripe_currecny" id="stripe_currecny"
+                                                class="form-control form-control"
+                                                value="{{ $settings->stripe_currecny ?? '' }}">
                                         </div>
                                     </div>
                                 </div>
