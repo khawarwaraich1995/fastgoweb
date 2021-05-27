@@ -61,6 +61,18 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('categories-main/change_status', ['as' => 'categories-main.status', 'uses' => 'CatagoriesmainController@change_status']);
     Route::get('categories-main/destroy/{id}', ['as' => 'categories-main.destroy', 'uses' => 'CatagoriesmainController@destroy']);
 
+    Route::get('works', ['as' => 'works', 'uses' => 'HowItWorksController@index']);
+    Route::get('works/create', ['as' => 'works.create', 'uses' => 'HowItWorksController@create']);
+    Route::any('works/add', ['as' => 'works.add', 'uses' => 'HowItWorksController@store']);
+    Route::any('works/update/{id}', ['as' => 'works.update', 'uses' => 'HowItWorksController@store']);
+    Route::get('works/edit/{id}', ['as' => 'works.edit', 'uses' => 'HowItWorksController@edit']);
+    Route::post('works/change_status', ['as' => 'works.status', 'uses' => 'HowItWorksController@change_status']);
+    Route::get('works/destroy/{id}', ['as' => 'works.destroy', 'uses' => 'HowItWorksController@destroy']);
+
+        //Settings
+        Route::get('ride-settings', ['as' => 'ride-settings', 'uses' => 'RideSettingsController@index']);
+        Route::post('ridesettings/update/{id}', ['as' => 'ridesettings.update', 'uses' => 'RideSettingsController@updateSettings']);
+
     Route::name('admin.')->group(function () {
 
 

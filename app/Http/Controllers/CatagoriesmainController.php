@@ -104,6 +104,8 @@ class CatagoriesmainController extends Controller
      */
     public function destroy(Catagoriesmain $catagories)
     {
-        //
+        $step = Catagoriesmain::find($id);
+        $step->delete();
+        return redirect()->back();
     }
 }

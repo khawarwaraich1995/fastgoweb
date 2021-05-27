@@ -113,7 +113,7 @@
                 <i class="ni ni-settings text-black"></i> {{ __('Site Settings ') }}
             </a>
         </li>
-
+<hr>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('/ride/categories') }}">
                     <i class="ni ni-spaceship text-red"></i> {{ __('Vehicle Categories') }}
@@ -124,10 +124,9 @@
                     <i class="ni ni-spaceship text-blue"></i> {{ __('Main Categories') }}
                 </a>
             </li>
-        
-        <!-- <li class="nav-item">
-            <a class="nav-link" href="{{ route('settings.cloudupdate') }}">
-                <i class="ni ni-cloud-download-95 text-blue"></i> {{ __('Updates') }}
-            </a>
-        </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('ride-settings') }}">
+                    <i class="ni ni-settings text-black"></i> {{ __('Ride Settings ') }}
+                </a>
+            </li>
 </ul>
